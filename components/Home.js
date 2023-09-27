@@ -18,7 +18,7 @@ function Home() {
       setLikedMovies([...likedMovies, movieTitle]);
     }
   };
- 
+
   const likedMoviesPopover = likedMovies.map((data, i) => {
     return (
       <div key={i} className={styles.likedMoviesContainer}>
@@ -38,7 +38,7 @@ function Home() {
 
   // requête vers le backend webservice afin de remplacer le tableau d’objet moviesData par les données renvoyées par l’API.
   useEffect(() => {
-    fetch("http://localhost:3000/movies")
+    fetch("https://moviz-backend-pearl.vercel.app/movies")
       .then((response) => response.json())
       .then((data) => {
         // L’url de l’image n’est pas correctement renseignée, modifiez son format pour pouvoir l’afficher.
@@ -46,17 +46,17 @@ function Home() {
         const formatedData = data.movies.map((movie) => {
           let description = movie.overview;
           if (description.length >= 250) {
-          description =  description.slice(0,250) + "...";
+            description = description.slice(0, 250) + "...";
             console.log(description);
           }
-          
+
           const poster = `https://image.tmdb.org/t/p/w500/${movie.poster_path}`;
           return {
             title: movie.title,
-            poster : poster,
+            poster: poster,
             voteAverage: movie.vote_average,
             voteCount: movie.vote_count,
-            overview:description,  
+            overview: description,
           };
         });
         setMoviesDb(formatedData);
